@@ -5,11 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    count: 0
+    token: ''
   },
   mutations: {
-    increment (state) {
-      state.count++
+    updateToken (state, token) {
+      state.token = token
     }
   }
 })
