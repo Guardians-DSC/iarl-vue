@@ -1,7 +1,16 @@
 <template>
   <div class="workspace">
-    <div v-for="(item, key) in items" :key="key" class="card">
-      <p class="wrap">{{ item.name.substring(0,40) }}{{ item.name.length > 40 ? '...' : '' }}</p>
+    <div class="directories">
+      <div v-for="(item, key) in directories" :key="key" class="card">
+        <img src="@/assets/directory.png" alt="">
+        <p>{{ item.name.substring(0,20) }}{{ item.name.length > 20 ? '...' : '' }}</p>
+      </div>
+    </div>
+    <div class="files">
+      <div v-for="(item, key) in files" :key="key" class="card">
+        <img src="@/assets/file.png" alt="">
+        <p>{{ item.name.substring(0,20) }}{{ item.name.length > 20 ? '...' : '' }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -25,29 +34,40 @@ export default {
     ).then(res => {
       this.items = res.data.items
     })
+  },
+  computed: {
+    directories () {
+      return this.items.filter(x => !x.isFile)
+    },
+    files () {
+      return this.items.filter(x => x.isFile)
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.workspace {
+.directories, .files {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
 }
 .card {
-  background: #444;
-  width: 10rem;
-  height: 1rem;
+  border: 1px solid #eee;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 14px;
   padding: .5rem;
-  height: auto;
   text-align: center;
+  border-radius: 5px;
+  color: #666;
+  margin: 1rem;
+  width: 15rem;
 }
-.wrap { 
-   white-space: pre-wrap;
-   white-space: -moz-pre-wrap;
-   white-space: -pre-wrap;
-   white-space: -o-pre-wrap;
-   word-wrap: break-word;
+.directories .card {
+  display: flex;
+  align-items: center;
+  img {
+    margin-right: 1rem;
+  }
 }
 </style>
