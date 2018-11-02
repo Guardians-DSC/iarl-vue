@@ -31,6 +31,7 @@ export default {
   color: #666;
   margin: 1rem;
   width: 16rem;
+  background: #fff;
   p {
     margin: 1rem 0;
   }

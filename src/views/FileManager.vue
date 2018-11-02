@@ -1,6 +1,7 @@
 <template>
   <div class="workspace">
     <breadcrumb class="breadcrumb" />
+    <button @click="showHidden = !showHidden">Ocultos</button>
     <div class="directories">
       <directory-card v-for="(directory, key) in directories" :key="key"
         :directoryName="directory.name" />
@@ -23,16 +24,21 @@ export default {
   name: 'FileManager',
   data () {
     return {
-      items: []
+      items: [],
+      showHidden: false
     }
   },
   computed: {
     ...mapState(['path']),
     directories () {
-      return this.items.filter(x => !x.isFile)
+      return this.items.filter(x => {
+        return !((x.name.substring(0, 1) === '.') ^ this.showHidden) && !x.isFile
+      })
     },
     files () {
-      return this.items.filter(x => x.isFile)
+      return this.items.filter(x => {
+        return !((x.name.substring(0, 1) === '.') ^ this.showHidden) && !x.isFile
+      })
     }
   },
   components: {
