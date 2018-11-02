@@ -13,6 +13,7 @@ export default new Vuex.Store({
     },
     addDirectory (state, directory) {
       state.path.push(directory)
+      console.log(state.path)
     }
   }
 })
