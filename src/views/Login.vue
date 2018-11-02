@@ -39,7 +39,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #eeeeee;
+  background: #eee;
 }
 .login-box {
   background: #fff;
