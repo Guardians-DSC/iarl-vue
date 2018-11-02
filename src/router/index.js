@@ -13,7 +13,7 @@ export default new Router({
       component: Login
     },
     {
-      path: '/fileManager',
+      path: '/FileManager',
       name: 'FileManager',
       component: FileManager
     }

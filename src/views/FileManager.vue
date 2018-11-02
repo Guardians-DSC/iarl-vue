@@ -1,15 +1,16 @@
 <template>
   <div class="workspace">
+    <breadcrumb class="breadcrumb" />
     <div class="directories">
-      <div v-for="(item, key) in directories" :key="key" class="card">
+      <div v-for="(directory, key) in directories" :key="key" class="card">
         <img src="@/assets/directory.png" alt="">
-        <p>{{ item.name.substring(0,20) }}{{ item.name.length > 20 ? '...' : '' }}</p>
+        <p>{{ directory.name.substring(0,20) }}{{ directory.name.length > 20 ? '...' : '' }}</p>
       </div>
     </div>
     <div class="files">
-      <div v-for="(item, key) in files" :key="key" class="card">
+      <div v-for="(file, key) in files" :key="key" class="card">
         <img src="@/assets/file.png" alt="">
-        <p>{{ item.name.substring(0,20) }}{{ item.name.length > 20 ? '...' : '' }}</p>
+        <p>{{ file.name.substring(0,20) }}{{ file.name.length > 20 ? '...' : '' }}</p>
       </div>
     </div>
   </div>
@@ -17,6 +18,8 @@
 
 <script>
 import axios from 'axios'
+import Breadcrumb from '@/components/Breadcrumb'
+import { mapState } from 'vuex'
 
 export default {
   name: 'FileManager',
@@ -25,23 +28,34 @@ export default {
       items: []
     }
   },
-  mounted () {
-    axios.get('http://127.0.0.1:3000/api/directories',
-      {
-        params: { path: 'Downloads' },
-        headers: { Authorization: localStorage.token }
-      }
-    ).then(res => {
-      this.items = res.data.items
-    })
-  },
   computed: {
+    ...mapState(['path']),
     directories () {
       return this.items.filter(x => !x.isFile)
     },
     files () {
       return this.items.filter(x => x.isFile)
     }
+  },
+  components: {
+    Breadcrumb
+  },
+  methods: {
+    updateItems () {
+      axios.get('http://127.0.0.1:3000/api/directories',
+        {
+          params: { path: this.path.join('/') },
+          headers: { Authorization: localStorage.token }
+        }).then(res => {
+          this.items = res.data.items
+        })
+    }
+  },
+  watch: {
+    path () { this.updateItems() }
+  },
+  mounted () {
+    this.updateItems()
   }
 }
 </script>
@@ -61,7 +75,10 @@ export default {
   border-radius: 5px;
   color: #666;
   margin: 1rem;
-  width: 15rem;
+  width: 16rem;
+  p {
+    margin: 1rem 0;
+  }
 }
 .directories .card {
   display: flex;
@@ -69,5 +86,8 @@ export default {
   img {
     margin-right: 1rem;
   }
+}
+.breadcrumb {
+  margin: 1rem;
 }
 </style>
