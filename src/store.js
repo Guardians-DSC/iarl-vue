@@ -10,6 +10,9 @@ export default new Vuex.Store({
   mutations: {
     backPath (state, index) {
       state.path = state.path.slice(0, index)
+    },
+    addDirectory (state, directory) {
+      state.path.push(directory)
     }
   }
 })

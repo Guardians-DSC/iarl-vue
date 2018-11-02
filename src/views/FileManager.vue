@@ -2,7 +2,10 @@
   <div class="workspace">
     <breadcrumb class="breadcrumb" />
     <div class="directories">
-      <div v-for="(directory, key) in directories" :key="key" class="card">
+      <div v-for="(directory, key) in directories"
+        :key="key"
+        @dblclick="addDirectory(directory.name)"
+        class="card">
         <img src="@/assets/directory.png" alt="">
         <p>{{ directory.name.substring(0,20) }}{{ directory.name.length > 20 ? '...' : '' }}</p>
       </div>
@@ -19,7 +22,7 @@
 <script>
 import axios from 'axios'
 import Breadcrumb from '@/components/Breadcrumb'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'FileManager',
@@ -41,14 +44,15 @@ export default {
     Breadcrumb
   },
   methods: {
+    ...mapMutations(['addDirectory']),
     updateItems () {
       axios.get('http://127.0.0.1:3000/api/directories',
         {
           params: { path: this.path.join('/') },
           headers: { Authorization: localStorage.token }
         }).then(res => {
-          this.items = res.data.items
-        })
+        this.items = res.data.items
+      })
     }
   },
   watch: {
