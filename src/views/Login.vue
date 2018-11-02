@@ -1,8 +1,8 @@
 <template>
   <div class="login">
     <div class="login-box">
-      <input type="text" class="username" placeholder="username" v-model="username">
-      <input type="password" class="password" placeholder="password" v-model="password">
+      <input type="text" class="username" placeholder="username" v-model="login.username">
+      <input type="password" class="password" placeholder="password" v-model="login.password">
       <button @click="submit()">Login</button>
     </div>
   </div>
@@ -10,25 +10,24 @@
 
 <script>
 import axios from 'axios'
-import { mapMutations } from 'vuex'
 
 export default {
   name: 'Login',
   data () {
     return {
-      username: '',
-      password: ''
+      login: {
+        username: '',
+        password: ''
+      }
     }
   },
   methods: {
-    ...mapMutations(['updateToken']),
-    async submit () {
-      const res = await axios.post('http://127.0.0.1:3000/api/login', {
-        username: this.username,
-        password: this.password
-      })
-      const token = res.data.token
-      this.updateToken(token)
+    submit () {
+      axios.post('http://127.0.0.1:3000/api/login', this.login)
+        .then(res => {
+          localStorage.token = res.data.token
+          this.$router.push('FileManager')
+        })
     }
   }
 }
