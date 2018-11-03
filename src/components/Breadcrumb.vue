@@ -24,6 +24,7 @@ export default {
 <style lang="scss" scoped>
 .breadcrumb {
   display: flex;
+  user-select: none;
   ul {
     list-style: none;
     margin: 0;

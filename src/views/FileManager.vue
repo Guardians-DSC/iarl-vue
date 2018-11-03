@@ -1,17 +1,24 @@
 <template>
   <div class="workspace">
-    <breadcrumb class="breadcrumb" />
-    <div class="tags">
-      <input type="checkbox" id="show-hidden-tag" class="check-tag" v-model="showHidden">
-      <label class="tag" for="show-hidden-tag">Ocultos</label>
+    <div class="header">
+      <img src="@/assets/back-arrow.png" class="back-arrow" alt="">
+      <div class="bar">
+        <breadcrumb class="breadcrumb" />
+        <div class="tags">
+          <input type="checkbox" id="show-hidden-tag" class="check-tag" v-model="showHidden">
+          <label class="tag" for="show-hidden-tag">Arquivos ocultos</label>
+        </div>
+      </div>
     </div>
-    <div class="directories">
-      <directory-card v-for="(directory, key) in directories" :key="key"
-        :directoryName="directory.name" />
-    </div>
-    <div class="files">
-      <file-card v-for="(file, key) in files" :key="key"
-        :fileName="file.name" />
+    <div class="archives">
+      <div class="directories">
+        <directory-card v-for="(directory, key) in directories" :key="key"
+          :directoryName="directory.name" />
+      </div>
+      <div class="files">
+        <file-card v-for="(file, key) in files" :key="key"
+          :fileName="file.name" />
+      </div>
     </div>
   </div>
 </template>
@@ -73,12 +80,21 @@ export default {
 .workspace {
   background: #fdfdfd;
 }
+.header {
+  padding: 1.2rem 0 .2rem 0;
+  border-bottom: 1px solid #ccc;
+  width: 90%;
+  margin: auto;
+  margin-bottom: 2rem;
+}
 .directories, .files {
   display: flex;
   flex-wrap: wrap;
+  margin: auto;
+  width: 90%;
 }
 .breadcrumb {
-  padding: 1rem;
+  padding: 1rem 0;
 }
 .check-tag {
   display: none;
@@ -91,8 +107,21 @@ export default {
   background: #b9b9b9;
   padding: .5rem;
   color: #fff;
+  font-size: .8rem;
+  user-select: none;
 }
 .tags {
   margin: 1rem;
+}
+.bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: .5rem;
+}
+.back-arrow:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  transition: all .2s;
 }
 </style>
