@@ -19,7 +19,7 @@ export default {
     iconPath () {
       try {
         return require('@/assets/icons/' + this.extension.substring(1) + '.png')
-      }   catch (err) {
+      } catch (err) {
         return require('@/assets/icons/_blank.png')
       }
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="workspace">
     <header>
-      <img src="@/assets/back-arrow.png" @click="backPath(path.length-1)" class="back-arrow" alt="Voltar">
+      <div @click="backPath(path.length-1)" class="back-arrow" alt="Voltar"></div>
       <div>
         <breadcrumb class="breadcrumb" />
         <input type="checkbox" id="show-hidden" class="check-tag" v-model="showHidden">
@@ -112,6 +112,11 @@ header {
   color: #fff;
   font-size: .8rem;
   user-select: none;
+}
+.back-arrow {
+  background-image: url('../assets/back-arrow.png');
+  width: 36px;
+  height: 23px;
 }
 .back-arrow:hover {
   cursor: pointer;
