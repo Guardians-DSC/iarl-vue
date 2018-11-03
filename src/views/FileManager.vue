@@ -1,7 +1,7 @@
 <template>
   <div class="workspace">
     <div class="header">
-      <img src="@/assets/back-arrow.png" class="back-arrow" alt="">
+      <img src="@/assets/back-arrow.png" @click="backPath(path.length - 1)" class="back-arrow" alt="">
       <div class="bar">
         <breadcrumb class="breadcrumb" />
         <div class="tags">
@@ -28,7 +28,7 @@ import axios from 'axios'
 import Breadcrumb from '@/components/Breadcrumb'
 import DirectoryCard from '@/components/DirectoryCard'
 import FileCard from '@/components/FileCard'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'FileManager',
@@ -57,6 +57,7 @@ export default {
     FileCard
   },
   methods: {
+    ...mapMutations(['backPath']),
     updateItems () {
       axios.get('http://127.0.0.1:3000/api/directories',
         {
