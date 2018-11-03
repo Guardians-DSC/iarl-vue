@@ -96,6 +96,9 @@ header {
   margin: auto;
   width: 90%;
 }
+.files {
+  margin-top: 2rem;
+}
 .check-tag {
   display: none;
   &:checked ~ .tag {

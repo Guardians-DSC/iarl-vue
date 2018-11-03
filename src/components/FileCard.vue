@@ -21,19 +21,19 @@ export default {
 
 <style lang="scss" scoped>
 .file-card {
-  border: 1px solid #eee;
+  background: #fff;
+  border: 1px solid #ddd;
   font-family: sans-serif;
   font-weight: bold;
   font-size: 14px;
-  padding: .5rem;
   text-align: center;
-  border-radius: 5px;
   color: #666;
-  margin: 1rem;
-  width: 16rem;
-  background: #fff;
+  border-radius: 5px;
+  margin: .1rem;
+  width: 12rem;
+  padding: 1rem 0;
   p {
-    margin: 1rem 0;
+    margin-top: 1rem;
   }
 }
 </style>
