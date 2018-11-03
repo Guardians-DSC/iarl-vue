@@ -35,12 +35,12 @@ export default {
     ...mapState(['path']),
     directories () {
       return this.items.filter(x => {
-        return !((x.name.substring(0, 1) === '.') ^ this.showHidden) && !x.isFile
+        return !x.isFile && (this.showHidden ? true : x.name.substring(0, 1) !== '.')
       })
     },
     files () {
       return this.items.filter(x => {
-        return !((x.name.substring(0, 1) === '.') ^ this.showHidden) && !x.isFile
+        return x.isFile && (this.showHidden ? true : x.name.substring(0, 1) !== '.')
       })
     }
   },
