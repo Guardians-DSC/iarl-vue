@@ -83,12 +83,12 @@ header {
   width: 90%;
   margin: auto;
   margin-bottom: 2rem;
-  & ~ div {
+  & > div {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: .5rem;
-  } 
+    margin: 1rem 0 .5rem 0;
+  }
 }
 .directories, .files {
   display: flex;
