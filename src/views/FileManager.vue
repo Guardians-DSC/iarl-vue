@@ -1,7 +1,10 @@
 <template>
   <div class="workspace">
     <breadcrumb class="breadcrumb" />
-    <button @click="showHidden = !showHidden">Ocultos</button>
+    <div class="tags">
+      <input type="checkbox" id="show-hidden-tag" class="check-tag" v-model="showHidden">
+      <label class="tag" for="show-hidden-tag">Ocultos</label>
+    </div>
     <div class="directories">
       <directory-card v-for="(directory, key) in directories" :key="key"
         :directoryName="directory.name" />
@@ -76,5 +79,20 @@ export default {
 }
 .breadcrumb {
   padding: 1rem;
+}
+.check-tag {
+  display: none;
+  &:checked ~ label {
+    background: #3b9696;
+    box-shadow: 0 5px 5px #ccc;
+  }
+}
+.tag {
+  background: #b9b9b9;
+  padding: .5rem;
+  color: #fff;
+}
+.tags {
+  margin: 1rem;
 }
 </style>
