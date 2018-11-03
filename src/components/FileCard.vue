@@ -1,6 +1,6 @@
 <template>
   <div class="file-card">
-    <img src="@/assets/file.png" alt="">
+    <img :src="iconPath" alt="">
     <p>{{ processedFileName }}</p>
   </div>
 </template>
@@ -9,11 +9,19 @@
 export default {
   name: 'FileCard',
   props: {
-    fileName: String
+    fileName: String,
+    extension: String
   },
   computed: {
     processedFileName () {
       return this.fileName.substring(0, 20) + (this.fileName.length > 20 ? '...' : '')
+    },
+    iconPath () {
+      try {
+        return require('@/assets/icons/' + this.extension.substring(1) + '.png')
+      }   catch (err) {
+        return require('@/assets/icons/_blank.png')
+      }
     }
   }
 }

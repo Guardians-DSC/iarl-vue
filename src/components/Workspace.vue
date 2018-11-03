@@ -14,7 +14,7 @@
     </div>
     <div class="files">
       <file-card v-for="(file, key) in files" :key="key"
-        :fileName="file.name" />
+        :fileName="file.name" :extension="file.extension" />
     </div>
   </div>
 </template>
