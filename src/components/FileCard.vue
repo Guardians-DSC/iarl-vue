@@ -73,7 +73,6 @@ export default {
     position: absolute;
     right: .5rem;
     top: .5rem;
-    cursor: pointer;
     &:hover {
       transform: translate(0, 1px);
     }

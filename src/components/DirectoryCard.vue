@@ -1,5 +1,6 @@
 <template>
-  <div class="directory-card" @dblclick="addDirectory(directoryName)">
+  <div class="directory-card" :class="{ selected: selected }"
+    @dblclick="addDirectory(directoryName)">
     <img src="@/assets/directory.png" alt="">
     <p :title="directoryName">{{ processedDirectoryName }}</p>
     <img src="@/assets/download.png" alt="" @click="download()" class="download">
@@ -12,6 +13,11 @@ import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'DirectoryCard',
+  date () {
+    return {
+      selected: false
+    }
+  },
   props: {
     directoryName: String
   },
@@ -60,7 +66,7 @@ export default {
   align-items: center;
   border-radius: 5px;
   position: relative;
-  cursor: default;
+  cursor: pointer;
   user-select: none;
   img {
     margin-right: .5rem;
@@ -76,5 +82,8 @@ export default {
       transform: scale(1.1);
     }
   }
+}
+.selected {
+  background: #000;
 }
 </style>

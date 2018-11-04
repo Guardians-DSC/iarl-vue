@@ -25,6 +25,7 @@ export default {
 .breadcrumb {
   display: flex;
   user-select: none;
+  font-size: 1.3rem;
   ul {
     list-style: none;
     margin: 0;
