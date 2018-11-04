@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     path: [],
     filters: {
-      search: ''
+      search: new RegExp()
     }
   },
   mutations: {

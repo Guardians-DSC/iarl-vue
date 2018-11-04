@@ -1,9 +1,8 @@
 <template>
   <div class="tools-bar">
-    <!-- <div @click="backPath(path.length-1)" class="back-arrow" alt="Voltar"></div> -->
     <breadcrumb class="breadcrumb" />
     <div>
-      <input type="checkbox" id="show-hidden" class="check-tag" v-model="showHidden">
+      <input type="checkbox" id="show-hidden" class="check-tag">
       <label class="tag" for="show-hidden">Arquivos ocultos</label>
     </div>
   </div>

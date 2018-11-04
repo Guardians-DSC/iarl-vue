@@ -1,7 +1,6 @@
 <template>
   <div>
-    <input type="text" class="search" placeholder="Buscar meu arquivo"
-    @change="updateSearch(searchRegex)" v-model="search">
+    <input type="text" class="search" placeholder="Buscar meu arquivo" v-model="search">
   </div>
 </template>
 
@@ -24,7 +23,12 @@ export default {
       return new RegExp('^' + search, 'i')
     }
   },
-  methods: mapMutations(['updateSearch'])
+  methods: mapMutations(['updateSearch']),
+  watch: {
+    search () {
+      this.updateSearch(this.searchRegex)
+    }
+  }
 }
 </script>
 

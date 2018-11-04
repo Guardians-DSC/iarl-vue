@@ -1,6 +1,5 @@
 <template>
   <div class="workspace">
-    {{filters}}
     <div class="directories">
       <directory-card v-for="(directory, key) in getItems({ isFile: false })" :key="key"
         :directoryName="directory.name" />
@@ -25,7 +24,6 @@ export default {
   data () {
     return {
       items: [],
-      showHidden: false,
       validToken: true
     }
   },
@@ -55,7 +53,7 @@ export default {
     getItems ({ isFile }) {
       return this.items.filter(x => {
         return (isFile ? x.isFile : !x.isFile) &&
-               (this.showHidden ? true : x.name.substring(0, 1) !== '.') &&
+               /* (this.showHidden ? true : x.name.substring(0, 1) !== '.') && */
                (this.filters.search ? this.filters.search.test(x.name) : true)
       })
     }

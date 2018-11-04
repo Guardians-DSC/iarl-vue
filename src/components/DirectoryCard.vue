@@ -1,5 +1,5 @@
 <template>
-  <div class="directory-card" :class="{ selected: selected }"
+  <div class="directory-card"
     @dblclick="addDirectory(directoryName)">
     <img src="@/assets/directory.png" alt="">
     <p :title="directoryName">{{ processedDirectoryName }}</p>
@@ -13,11 +13,6 @@ import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'DirectoryCard',
-  date () {
-    return {
-      selected: false
-    }
-  },
   props: {
     directoryName: String
   },
@@ -82,8 +77,5 @@ export default {
       transform: scale(1.1);
     }
   }
-}
-.selected {
-  background: #000;
 }
 </style>
