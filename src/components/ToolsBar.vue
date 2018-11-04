@@ -2,7 +2,7 @@
   <div class="tools-bar">
     <breadcrumb class="breadcrumb" />
     <div>
-      <input type="checkbox" id="show-hidden" class="check-tag">
+      <input type="checkbox" id="show-hidden" class="check-tag" @click="changeHidden">
       <label class="tag" for="show-hidden">Arquivos ocultos</label>
     </div>
   </div>
@@ -10,12 +10,14 @@
 
 <script>
 import Breadcrumb from '@/components/Breadcrumb.vue'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'ToolsBar',
   components: {
     Breadcrumb
-  }
+  },
+  methods: mapMutations(['changeHidden'])
 }
 </script>
 

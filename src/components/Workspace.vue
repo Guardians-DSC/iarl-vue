@@ -17,7 +17,7 @@ import axios from 'axios'
 import DirectoryCard from '@/components/DirectoryCard'
 import FileCard from '@/components/FileCard'
 import LoginModal from '@/components/LoginModal'
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Workspace',
@@ -36,7 +36,6 @@ export default {
     LoginModal
   },
   methods: {
-    ...mapMutations(['backPath']),
     updateItems () {
       axios.get('http://127.0.0.1:3000/api/directories',
         {
@@ -53,7 +52,7 @@ export default {
     getItems ({ isFile }) {
       return this.items.filter(x => {
         return (isFile ? x.isFile : !x.isFile) &&
-               /* (this.showHidden ? true : x.name.substring(0, 1) !== '.') && */
+               (this.filters.hidden ? true : x.name.substring(0, 1) !== '.') &&
                (this.filters.search ? this.filters.search.test(x.name) : true)
       })
     }

@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     path: [],
     filters: {
-      search: new RegExp()
+      search: new RegExp(),
+      hidden: false
     }
   },
   mutations: {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     updateSearch (state, search) {
       state.filters.search = search
+    },
+    changeHidden (state) {
+      state.filters.hidden = !state.filters.hidden
     }
   }
 })
