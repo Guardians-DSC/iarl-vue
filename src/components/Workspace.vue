@@ -39,7 +39,11 @@ export default {
   computed: {
     ...mapState(['path']),
     searchRegex () {
-      return new RegExp(this.search, 'i')
+      let search = this.search
+      if (this.search.startsWith('.')) {
+        search = '\\' + search
+      }
+      return new RegExp('^' + search, 'i')
     }
   },
   components: {
