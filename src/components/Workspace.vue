@@ -17,6 +17,7 @@
       <file-card v-for="(file, key) in getItems({ isFile: true })" :key="key"
         :fileName="file.name" :extension="file.extension" />
     </div>
+    <login-modal v-if="!validToken" />
   </div>
 </template>
 
@@ -25,6 +26,7 @@ import axios from 'axios'
 import Breadcrumb from '@/components/Breadcrumb'
 import DirectoryCard from '@/components/DirectoryCard'
 import FileCard from '@/components/FileCard'
+import LoginModal from '@/components/LoginModal'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
@@ -33,7 +35,8 @@ export default {
     return {
       items: [],
       showHidden: false,
-      search: ''
+      search: '',
+      validToken: true
     }
   },
   computed: {
@@ -49,7 +52,8 @@ export default {
   components: {
     Breadcrumb,
     DirectoryCard,
-    FileCard
+    FileCard,
+    LoginModal
   },
   methods: {
     ...mapMutations(['backPath']),
@@ -60,6 +64,10 @@ export default {
           headers: { Authorization: localStorage.token }
         }).then(res => {
         this.items = res.data.items
+      }).catch(err => {
+        if (err.response.status === 400) {
+          this.validToken = false
+        }
       })
     },
     getItems ({ isFile }) {
