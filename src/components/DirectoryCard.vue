@@ -24,9 +24,11 @@ export default {
   methods: {
     ...mapMutations(['addDirectory']),
     download () {
+      let downloadPath = this.path.slice()
+      downloadPath.push(this.directoryName)
       axios.get('http://127.0.0.1:3000/api/download',
         {
-          params: { path: this.path.join('/') + '/' + this.directoryName },
+          params: { path: downloadPath.join('/') },
           headers: { Authorization: localStorage.token },
           responseType: 'blob'
         }).then(response => {
@@ -67,6 +69,12 @@ export default {
     position: absolute;
     right: 0;
     cursor: pointer;
+    &:hover {
+      transform: translate(0, 1px);
+    }
+    &:active {
+      transform: scale(1.1);
+    }
   }
 }
 </style>
