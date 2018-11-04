@@ -5,7 +5,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    path: []
+    path: [],
+    filters: {
+      search: ''
+    }
   },
   mutations: {
     backPath (state, index) {
@@ -13,6 +16,9 @@ export default new Vuex.Store({
     },
     addDirectory (state, directory) {
       state.path.push(directory)
+    },
+    updateSearch (state, search) {
+      state.filters.search = search
     }
   }
 })

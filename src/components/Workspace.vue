@@ -1,5 +1,6 @@
 <template>
   <div class="workspace">
+    {{filters}}
     <div class="directories">
       <directory-card v-for="(directory, key) in getItems({ isFile: false })" :key="key"
         :directoryName="directory.name" />
@@ -25,19 +26,11 @@ export default {
     return {
       items: [],
       showHidden: false,
-      search: '',
       validToken: true
     }
   },
   computed: {
-    ...mapState(['path']),
-    searchRegex () {
-      let search = this.search
-      if (this.search.startsWith('.')) {
-        search = '\\' + search
-      }
-      return new RegExp('^' + search, 'i')
-    }
+    ...mapState(['path', 'filters'])
   },
   components: {
     DirectoryCard,
@@ -63,7 +56,7 @@ export default {
       return this.items.filter(x => {
         return (isFile ? x.isFile : !x.isFile) &&
                (this.showHidden ? true : x.name.substring(0, 1) !== '.') &&
-               (this.search ? this.searchRegex.test(x.name) : true)
+               (this.filters.search ? this.filters.search.test(x.name) : true)
       })
     }
   },
