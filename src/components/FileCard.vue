@@ -2,7 +2,7 @@
   <div class="file-card">
     <img src="@/assets/download.png" alt="" @click="download()" class="download">
     <img :src="iconPath" alt="">
-    <p>{{ processedFileName }}</p>
+    <p :title="fileName">{{ processedFileName }}</p>
   </div>
 </template>
 
@@ -65,6 +65,7 @@ export default {
   width: 9rem;
   padding: 1rem 0;
   position: relative;
+  user-select: none;
   p {
     margin-top: 1rem;
   }

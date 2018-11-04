@@ -1,7 +1,7 @@
 <template>
   <div class="directory-card" @dblclick="addDirectory(directoryName)">
     <img src="@/assets/directory.png" alt="">
-    <p>{{ processedDirectoryName }}</p>
+    <p :title="directoryName">{{ processedDirectoryName }}</p>
     <img src="@/assets/download.png" alt="" @click="download()" class="download">
   </div>
 </template>
