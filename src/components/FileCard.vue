@@ -1,11 +1,15 @@
 <template>
   <div class="file-card">
+    <img src="@/assets/download.png" alt="" @click="download()" class="download">
     <img :src="iconPath" alt="">
     <p>{{ processedFileName }}</p>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import { mapState } from 'vuex'
+
 export default {
   name: 'FileCard',
   props: {
@@ -13,8 +17,9 @@ export default {
     extension: String
   },
   computed: {
+    ...mapState(['path']),
     processedFileName () {
-      return this.fileName.substring(0, 20) + (this.fileName.length > 20 ? '...' : '')
+      return this.fileName.substring(0, 10) + (this.fileName.length > 10 ? '...' : '')
     },
     iconPath () {
       try {
@@ -22,6 +27,25 @@ export default {
       } catch (err) {
         return require('@/assets/icons/_blank.png')
       }
+    }
+  },
+  methods: {
+    download () {
+      let downloadPath = this.path.slice()
+      downloadPath.push(this.fileName)
+      axios.get('http://127.0.0.1:3000/api/download',
+        {
+          params: { path: downloadPath.join('/') },
+          headers: { Authorization: localStorage.token },
+          responseType: 'blob'
+        }).then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', this.fileName)
+        document.body.appendChild(link)
+        link.click()
+      })
     }
   }
 }
@@ -38,10 +62,23 @@ export default {
   color: #666;
   border-radius: 5px;
   margin: .1rem;
-  width: 12rem;
+  width: 9rem;
   padding: 1rem 0;
+  position: relative;
   p {
     margin-top: 1rem;
+  }
+  .download {
+    position: absolute;
+    right: .5rem;
+    top: .5rem;
+    cursor: pointer;
+    &:hover {
+      transform: translate(0, 1px);
+    }
+    &:active {
+      transform: scale(1.1);
+    }
   }
 }
 </style>
