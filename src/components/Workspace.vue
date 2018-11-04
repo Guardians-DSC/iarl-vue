@@ -4,16 +4,17 @@
       <div @click="backPath(path.length-1)" class="back-arrow" alt="Voltar"></div>
       <div>
         <breadcrumb class="breadcrumb" />
+        <input type="text" v-model="search">
         <input type="checkbox" id="show-hidden" class="check-tag" v-model="showHidden">
         <label class="tag" for="show-hidden">Arquivos ocultos</label>
       </div>
     </header>
     <div class="directories">
-      <directory-card v-for="(directory, key) in directories" :key="key"
+      <directory-card v-for="(directory, key) in getItems({ isFile: false })" :key="key"
         :directoryName="directory.name" />
     </div>
     <div class="files">
-      <file-card v-for="(file, key) in files" :key="key"
+      <file-card v-for="(file, key) in getItems({ isFile: true })" :key="key"
         :fileName="file.name" :extension="file.extension" />
     </div>
   </div>
@@ -31,20 +32,14 @@ export default {
   data () {
     return {
       items: [],
-      showHidden: false
+      showHidden: false,
+      search: ''
     }
   },
   computed: {
     ...mapState(['path']),
-    directories () {
-      return this.items.filter(x => {
-        return !x.isFile && (this.showHidden ? true : x.name.substring(0, 1) !== '.')
-      })
-    },
-    files () {
-      return this.items.filter(x => {
-        return x.isFile && (this.showHidden ? true : x.name.substring(0, 1) !== '.')
-      })
+    searchRegex () {
+      return new RegExp(this.search, 'i')
     }
   },
   components: {
@@ -61,6 +56,13 @@ export default {
           headers: { Authorization: localStorage.token }
         }).then(res => {
         this.items = res.data.items
+      })
+    },
+    getItems ({ isFile }) {
+      return this.items.filter(x => {
+        return (isFile ? x.isFile : !x.isFile) &&
+               (this.showHidden ? true : x.name.substring(0, 1) !== '.') &&
+               (this.search ? this.searchRegex.test(x.name) : true)
       })
     }
   },

@@ -63,7 +63,7 @@ export default {
   cursor: default;
   user-select: none;
   img {
-    margin-right: 1rem;
+    margin-right: .5rem;
   }
   .download {
     position: absolute;
