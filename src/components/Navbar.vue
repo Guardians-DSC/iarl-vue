@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <h1 class="brand">IARL</h1>
+    <h1 class="brand">I A R L</h1>
     <search-bar class="search-bar"/>
     <ul>
       <a href="#"><li class="lab">LCC1</li></a>
@@ -25,20 +25,21 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Muli');
 
 .navbar {
-  padding: .5rem 3rem;
-  color: #fff;
+  padding: .7rem 3rem;
+  color: #32adad;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #33c7c7;
+  background: #fff;
+  box-shadow: 0 3px 5px #ddd;
   .brand {
     font-family: 'Muli', sans-serif;
     font-weight: normal;
   }
   .lab {
     font-weight: normal;
-    font-size: 1.3rem;
-    color: #087583;
+    font-size: 1rem;
+    color: #a5a5a5;
   }
   ul {
     list-style: none;

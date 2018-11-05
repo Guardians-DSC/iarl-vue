@@ -1,41 +1,38 @@
 <template>
-  <div class="tools-bar">
-    <breadcrumb class="breadcrumb" />
-    <div>
-      <input type="checkbox" id="show-hidden" class="check-tag" @click="changeHidden">
-      <label class="tag" for="show-hidden">Arquivos ocultos</label>
+  <div>
+    <div class="row">
+      <breadcrumb class="breadcrumb" />
+      <div>
+        <input type="checkbox" id="show-hidden" class="check-tag" @click="changeHidden">
+        <label class="tag" for="show-hidden">Arquivos ocultos</label>
+      </div>
     </div>
+    <storage-bar free="30%" occupied="70%" />
   </div>
 </template>
 
 <script>
-import Breadcrumb from '@/components/Breadcrumb.vue'
+import Breadcrumb from '@/components/Breadcrumb'
+import StorageBar from '@/components/StorageBar'
 import { mapMutations } from 'vuex'
 
 export default {
   name: 'ToolsBar',
   components: {
-    Breadcrumb
+    Breadcrumb,
+    StorageBar
   },
   methods: mapMutations(['changeHidden'])
 }
 </script>
 
 <style lang="scss" scoped>
-.tools-bar {
+.row {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #ddd;
   padding-bottom: .5rem;
 }
-.back-arrow {
-  background-image: url('../assets/back-arrow.png');
-  width: 36px;
-  height: 23px;
-}
-.back-arrow:hover {
-  cursor: pointer;
-}.check-tag {
+.check-tag {
   display: none;
   &:checked + .tag {
     background: #3b9696;
