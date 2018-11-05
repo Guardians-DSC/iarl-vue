@@ -1,7 +1,7 @@
 <template>
   <div class="search-bar">
     <button><img src="@/assets/lupa.png" alt=""></button>
-    <input type="text" class="search" placeholder="Busque arquivos..." v-model="search">
+    <input type="text" class="search" placeholder="Busque seus arquivos..." v-model="search">
   </div>
 </template>
 
@@ -40,10 +40,11 @@ export default {
 .search {
   border: none;
   background: #eee;
-  padding: .9rem 0;
+  padding: 1rem 1rem 1rem 0;
   border-radius: 0 50px 50px 0;
   font-size: 1rem;
   color: #555;
+  width: 20rem;
   &:focus {
     outline: none;
   }
