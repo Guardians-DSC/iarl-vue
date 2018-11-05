@@ -1,18 +1,30 @@
 <template>
   <div class="directory-card"
+    @mouseover="overCard = true" @mouseleave="overCard = false"
     @dblclick="addDirectory(directoryName)">
     <img src="@/assets/directory.png" alt="">
     <p :title="directoryName">{{ processedDirectoryName }}</p>
-    <img src="@/assets/download.png" alt="" @click="download()" class="download">
+    <img src="@/assets/download.png" alt=""
+    @click="download()"
+    class="download"
+    v-if="overCard">
+    <login-modal v-if="!validToken"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapState, mapMutations } from 'vuex'
+import LoginModal from '@/components/LoginModal'
 
 export default {
   name: 'DirectoryCard',
+  data () {
+    return {
+      overCard: false,
+      validToken: true
+    }
+  },
   props: {
     directoryName: String
   },
@@ -21,6 +33,9 @@ export default {
     processedDirectoryName () {
       return this.directoryName.substring(0, 10) + (this.directoryName.length > 10 ? '...' : '')
     }
+  },
+  components: {
+    LoginModal
   },
   methods: {
     ...mapMutations(['addDirectory']),
@@ -39,6 +54,10 @@ export default {
         link.setAttribute('download', `${this.directoryName}.zip`)
         document.body.appendChild(link)
         link.click()
+      }).catch(err => {
+        if (err.response.status === 400) {
+          this.validToken = false
+        }
       })
     }
   }
@@ -71,7 +90,7 @@ export default {
     right: 0;
     cursor: pointer;
     &:hover {
-      transform: translate(0, 1px);
+      transform: translate(0, 2px);
     }
     &:active {
       transform: scale(1.1);

@@ -1,7 +1,7 @@
 <template>
   <div id="myModal" class="modal">
       <div class="modal-content">
-        <p>Por favor, Faça o login novamente para
+        <p>Por favor, faça o login novamente para
            sabermos se você ainda está aí :)</p>
         <button @click="redirect()">Vamos lá</button>
       </div>
@@ -32,12 +32,25 @@ export default {
   overflow: auto;
   background-color: #000;
   background-color: rgba(0,0,0,0.4);
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
   .modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 30%;
+    button {
+      padding: .5rem 1rem;
+      border: none;
+      background: #33c7c7;
+      border-radius: 3px;
+      color: #fff;
+      margin-top: 1rem;
+    }
   }
 }
 </style>

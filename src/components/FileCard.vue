@@ -1,17 +1,25 @@
 <template>
-  <div class="file-card">
-    <img src="@/assets/download.png" alt="" @click="download()" class="download">
+  <div class="file-card" @mouseover="overCard = true" @mouseleave="overCard = false">
+    <img v-if="overCard" src="@/assets/download.png" alt="" @click="download()" class="download">
     <img :src="iconPath" alt="">
     <p :title="fileName">{{ processedFileName }}</p>
+    <login-modal v-if="!validToken"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapState } from 'vuex'
+import LoginModal from '@/components/LoginModal'
 
 export default {
   name: 'FileCard',
+  data () {
+    return {
+      overCard: false,
+      validToken: true
+    }
+  },
   props: {
     fileName: String,
     extension: String
@@ -29,6 +37,9 @@ export default {
       }
     }
   },
+  components: {
+    LoginModal
+  },
   methods: {
     download () {
       let downloadPath = this.path.slice()
@@ -45,6 +56,10 @@ export default {
         link.setAttribute('download', this.fileName)
         document.body.appendChild(link)
         link.click()
+      }).catch(err => {
+        if (err.response.status === 400) {
+          this.validToken = false
+        }
       })
     }
   }
@@ -73,8 +88,9 @@ export default {
     position: absolute;
     right: .5rem;
     top: .5rem;
+    cursor: pointer;
     &:hover {
-      transform: translate(0, 1px);
+      transform: translate(0, 2px);
     }
     &:active {
       transform: scale(1.1);
