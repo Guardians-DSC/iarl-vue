@@ -23,11 +23,11 @@ export default {
 
 <style lang="scss" scoped>
 .tools-bar, .workspace {
-  width: 75%;
+  width: 78%;
   margin: auto;
 }
 .tools-bar {
   width: 80%;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 </style>
