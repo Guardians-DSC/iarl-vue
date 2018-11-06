@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'Login',
@@ -22,10 +23,11 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['updateToken']),
     submit () {
       axios.post('http://127.0.0.1:3000/api/login', this.login)
         .then(res => {
-          localStorage.token = res.data.token
+          this.updateToken(res.data.token)
           this.$router.push('FileManager')
         })
     }

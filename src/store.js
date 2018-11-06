@@ -3,15 +3,22 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     path: [],
+    token: '',
     filters: {
       search: new RegExp(),
       hidden: false
     }
   },
   mutations: {
+    initialiseStore (state) {
+      if (localStorage.getItem('iarlStore')) {
+        const iarlStore = JSON.parse(localStorage.getItem('iarlStore'))
+        state.token = iarlStore.token
+      }
+    },
     backPath (state, index) {
       state.path = state.path.slice(0, index)
     },
@@ -23,6 +30,17 @@ export default new Vuex.Store({
     },
     changeHidden (state) {
       state.filters.hidden = !state.filters.hidden
+    },
+    updateToken (state, token) {
+      state.token = token
     }
   }
 })
+
+store.subscribe((mutation, state) => {
+  localStorage.setItem('iarlStore', JSON.stringify({
+    token: state.token
+  }))
+})
+
+export default store

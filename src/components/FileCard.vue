@@ -25,7 +25,7 @@ export default {
     extension: String
   },
   computed: {
-    ...mapState(['path']),
+    ...mapState(['path', 'token']),
     processedFileName () {
       return this.fileName.substring(0, 10) + (this.fileName.length > 10 ? '...' : '')
     },
@@ -47,7 +47,7 @@ export default {
       axios.get('http://127.0.0.1:3000/api/download',
         {
           params: { path: downloadPath.join('/') },
-          headers: { Authorization: localStorage.token },
+          headers: { Authorization: this.token },
           responseType: 'blob'
         }).then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]))

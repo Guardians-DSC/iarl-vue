@@ -28,7 +28,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['path', 'filters'])
+    ...mapState(['path', 'token', 'filters'])
   },
   components: {
     DirectoryCard,
@@ -40,7 +40,7 @@ export default {
       axios.get('http://127.0.0.1:3000/api/directories',
         {
           params: { path: this.path.join('/') },
-          headers: { Authorization: localStorage.token }
+          headers: { Authorization: this.token }
         }).then(res => {
         this.items = res.data.items
       }).catch(err => {
