@@ -1,12 +1,12 @@
 <template>
   <div class="search-bar">
     <button><img src="@/assets/lupa.png" alt=""></button>
-    <input type="text" class="search" placeholder="Busque seus arquivos..." v-model="search">
+    <input type="text" class="search" :placeholder="`Busque seus arquivos no ${activeWorkspace.lab}...`" v-model="search">
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'SearchBar',
@@ -16,6 +16,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['activeWorkspace']),
     searchRegex () {
       let search = this.search
       if (this.search.startsWith('.')) {

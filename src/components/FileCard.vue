@@ -25,7 +25,7 @@ export default {
     extension: String
   },
   computed: {
-    ...mapState(['path', 'token']),
+    ...mapState(['path', 'token', 'activeWorkspace']),
     processedFileName () {
       return this.fileName.substring(0, 10) + (this.fileName.length > 10 ? '...' : '')
     },
@@ -44,7 +44,7 @@ export default {
     download () {
       let downloadPath = this.path.slice()
       downloadPath.push(this.fileName)
-      axios.get('http://127.0.0.1:3000/api/download',
+      axios.get(`${this.activeWorkspace.apiURL}/api/download`,
         {
           params: { path: downloadPath.join('/') },
           headers: { Authorization: this.token },

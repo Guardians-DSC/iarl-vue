@@ -28,7 +28,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['path', 'token', 'filters'])
+    ...mapState(['path', 'token', 'activeWorkspace', 'filters'])
   },
   components: {
     DirectoryCard,
@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     updateItems () {
-      axios.get('http://127.0.0.1:3000/api/directories',
+      axios.get(`${this.activeWorkspace.apiURL}/api/directories`,
         {
           params: { path: this.path.join('/') },
           headers: { Authorization: this.token }
@@ -58,7 +58,8 @@ export default {
     }
   },
   watch: {
-    path () { this.updateItems() }
+    path () { this.updateItems() },
+    activeWorkspace () { this.updateItems() }
   },
   mounted () {
     this.updateItems()

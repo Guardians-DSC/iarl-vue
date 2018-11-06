@@ -7,6 +7,10 @@ const store = new Vuex.Store({
   state: {
     path: [],
     token: '',
+    activeWorkspace: {
+      lab: 'LCC3',
+      apiURL: 'http://127.0.0.1:3002'
+    },
     filters: {
       search: new RegExp(),
       hidden: false
@@ -14,9 +18,13 @@ const store = new Vuex.Store({
   },
   mutations: {
     initialiseStore (state) {
-      if (localStorage.getItem('iarlStore')) {
-        const iarlStore = JSON.parse(localStorage.getItem('iarlStore'))
-        state.token = iarlStore.token
+      if (localStorage.getItem('iarlStorage')) {
+        const iarlStorage = JSON.parse(localStorage.getItem('iarlStorage'))
+        state.token = iarlStorage.token
+        state.path = iarlStorage.path
+        if (iarlStorage.activeWorkspace) {
+          state.activeWorkspace = iarlStorage.activeWorkspace
+        }
       }
     },
     backPath (state, index) {
@@ -33,13 +41,19 @@ const store = new Vuex.Store({
     },
     updateToken (state, token) {
       state.token = token
+    },
+    updateWorkspace (state, workspace) {
+      state.activeWorkspace = workspace
+      state.path = []
     }
   }
 })
 
 store.subscribe((mutation, state) => {
-  localStorage.setItem('iarlStore', JSON.stringify({
-    token: state.token
+  localStorage.setItem('iarlStorage', JSON.stringify({
+    token: state.token,
+    activeWorkspace: state.activeWorkspace,
+    path: state.path
   }))
 })
 

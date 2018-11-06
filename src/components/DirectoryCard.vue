@@ -29,7 +29,7 @@ export default {
     directoryName: String
   },
   computed: {
-    ...mapState(['path', 'token']),
+    ...mapState(['path', 'token', 'activeWorkspace']),
     processedDirectoryName () {
       return this.directoryName.substring(0, 10) + (this.directoryName.length > 10 ? '...' : '')
     }
@@ -42,7 +42,7 @@ export default {
     download () {
       let downloadPath = this.path.slice()
       downloadPath.push(this.directoryName)
-      axios.get('http://127.0.0.1:3000/api/download',
+      axios.get(`${this.activeWorkspace.apiURL}/api/download`,
         {
           params: { path: downloadPath.join('/') },
           headers: { Authorization: this.token },

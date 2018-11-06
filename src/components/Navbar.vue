@@ -4,9 +4,9 @@
     <search-bar class="search-bar"/>
     <ul>
       <li v-for="(item, index) in navItems" :key="index"
-      @click="activeItem = index"
-      class="nav-item" :class="{ active: activeItem === index }">
-        {{ item }}
+      @click="updateWorkspace(item)"
+      class="nav-item" :class="{ active: item.lab === activeWorkspace.lab }">
+        {{ item.lab }}
       </li>
     </ul>
   </div>
@@ -14,17 +14,34 @@
 
 <script>
 import SearchBar from '@/components/SearchBar'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Navbar',
   data () {
     return {
-      navItems: ['LCC1', 'LCC2', 'LCC3'],
-      activeItem: -1
+      navItems: [
+        {
+          lab: 'LCC1',
+          apiURL: 'http://127.0.0.1:3000'
+        },
+        {
+          lab: 'LCC2',
+          apiURL: 'http://127.0.0.1:3001'
+        },
+        {
+          lab: 'LCC3',
+          apiURL: 'http://127.0.0.1:3002'
+        }
+      ]
     }
   },
+  computed: mapState(['activeWorkspace']),
   components: {
     SearchBar
+  },
+  methods: {
+    ...mapMutations(['updateWorkspace'])
   }
 }
 </script>
