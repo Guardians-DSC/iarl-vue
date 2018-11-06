@@ -3,18 +3,18 @@
       <div class="modal-content">
         <p>Por favor, faça o login novamente para
            sabermos se você ainda está aí :)</p>
-        <button @click="redirect()">Vamos lá</button>
+        <login-form />
       </div>
     </div>
 </template>
 
 <script>
+import LoginForm from '@/components/LoginForm'
+
 export default {
   name: 'LoginModal',
-  methods: {
-    redirect () {
-      this.$router.push('/')
-    }
+  components: {
+    LoginForm
   }
 }
 </script>
