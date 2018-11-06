@@ -3,9 +3,11 @@
     <h1 class="brand">I A R L</h1>
     <search-bar class="search-bar"/>
     <ul>
-      <a href="#"><li class="lab">LCC1</li></a>
-      <a href="#"><li class="lab">LCC2</li></a>
-      <a href="#"><li class="lab">LCC3</li></a>
+      <li v-for="(item, index) in navItems" :key="index"
+      @click="activeItem = index"
+      class="nav-item" :class="{ active: activeItem === index }">
+        {{ item }}
+      </li>
     </ul>
   </div>
 </template>
@@ -15,6 +17,12 @@ import SearchBar from '@/components/SearchBar'
 
 export default {
   name: 'Navbar',
+  data () {
+    return {
+      navItems: ['LCC1', 'LCC2', 'LCC3'],
+      activeItem: -1
+    }
+  },
   components: {
     SearchBar
   }
@@ -36,17 +44,21 @@ export default {
     font-family: 'Muli', sans-serif;
     font-weight: normal;
   }
-  .lab {
-    font-weight: normal;
-    font-size: 1rem;
-    color: #a5a5a5;
-  }
   ul {
     list-style: none;
     li {
       display: inline-block;
-      padding: 0 1rem;
+      padding: 1rem;
+      font-weight: normal;
+      font-size: 1.2rem;
+      color: #a5a5a5;
+      cursor: pointer;
+      user-select: none;
     }
+  }
+  .active {
+    font-weight: bolder;
+    color: #31e4cc;
   }
 }
 </style>
