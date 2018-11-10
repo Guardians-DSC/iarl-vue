@@ -32,7 +32,6 @@ export default {
       axios.post('http://127.0.0.1:3000/api/login', this.login)
         .then(res => {
           this.updateToken(res.data.token)
-          this.$router.push('FileManager')
         })
         .catch(err => {
           this.error = err.response.data.error

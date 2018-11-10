@@ -3,6 +3,7 @@
     <navbar class="nav"/>
     <tools-bar class="tools-bar"/>
     <workspace class="workspace"/>
+    <login-modal v-if="!validToken" />
   </div>
 </template>
 
@@ -10,14 +11,18 @@
 import Workspace from '@/components/Workspace'
 import Navbar from '@/components/Navbar'
 import ToolsBar from '@/components/ToolsBar'
+import LoginModal from '@/components/LoginModal'
+import { mapState } from 'vuex'
 
 export default {
   name: 'FileManager',
   components: {
     Workspace,
     Navbar,
-    ToolsBar
-  }
+    ToolsBar,
+    LoginModal
+  },
+  computed: mapState(['validToken'])
 }
 </script>
 

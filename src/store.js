@@ -7,6 +7,7 @@ const store = new Vuex.Store({
   state: {
     path: [],
     token: '',
+    validToken: false,
     activeWorkspace: {
       lab: 'LCC3',
       apiURL: 'http://127.0.0.1:3002'
@@ -22,6 +23,7 @@ const store = new Vuex.Store({
         const iarlStorage = JSON.parse(localStorage.getItem('iarlStorage'))
         state.token = iarlStorage.token
         state.path = iarlStorage.path
+        state.validToken = iarlStorage.validToken
         if (iarlStorage.activeWorkspace) {
           state.activeWorkspace = iarlStorage.activeWorkspace
         }
@@ -41,6 +43,7 @@ const store = new Vuex.Store({
     },
     updateToken (state, token) {
       state.token = token
+      state.validToken = true
     },
     updateWorkspace (state, workspace) {
       state.activeWorkspace = workspace
@@ -53,7 +56,8 @@ store.subscribe((mutation, state) => {
   localStorage.setItem('iarlStorage', JSON.stringify({
     token: state.token,
     activeWorkspace: state.activeWorkspace,
-    path: state.path
+    path: state.path,
+    validToken: state.validToken
   }))
 })
 

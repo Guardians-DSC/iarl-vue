@@ -32,7 +32,7 @@ export default {
   cursor: pointer;
 }
 .color-bar {
-  min-height: 5px;
+  min-height: 6px;
   text-align: center;
 }
 .description {

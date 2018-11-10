@@ -8,7 +8,6 @@
       <file-card v-for="(file, key) in getItems({ isFile: true })" :key="key"
         :fileName="file.name" :extension="file.extension" />
     </div>
-    <login-modal v-if="!validToken" />
   </div>
 </template>
 
@@ -16,15 +15,13 @@
 import axios from 'axios'
 import DirectoryCard from '@/components/DirectoryCard'
 import FileCard from '@/components/FileCard'
-import LoginModal from '@/components/LoginModal'
 import { mapState } from 'vuex'
 
 export default {
   name: 'Workspace',
   data () {
     return {
-      items: [],
-      validToken: true
+      items: []
     }
   },
   computed: {
@@ -32,8 +29,7 @@ export default {
   },
   components: {
     DirectoryCard,
-    FileCard,
-    LoginModal
+    FileCard
   },
   methods: {
     updateItems () {

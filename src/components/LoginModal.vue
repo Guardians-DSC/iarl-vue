@@ -1,11 +1,11 @@
 <template>
-  <div id="myModal" class="modal">
+  <div class="modal">
       <div class="modal-content">
-        <p>Por favor, faça o login novamente para
+        <p class="description">Por favor, faça o login novamente para
            sabermos se você ainda está aí :)</p>
-        <login-form />
+        <login-form class="login"/>
       </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -24,7 +24,7 @@ export default {
   display: block;
   position: fixed;
   z-index: 1;
-  padding-top: 100px;
+  padding-top: 7rem;
   left: 0;
   top: 0;
   width: 100%;
@@ -32,24 +32,21 @@ export default {
   overflow: auto;
   background-color: #000;
   background-color: rgba(0,0,0,0.4);
-  font-family: sans-serif;
-  font-weight: bold;
-  font-size: 14px;
   color: #666;
   text-align: center;
   .modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
+    padding: 1.5rem;
     border: 1px solid #888;
     width: 30%;
-    button {
-      padding: .5rem 1rem;
-      border: none;
-      background: #33c7c7;
-      border-radius: 3px;
-      color: #fff;
-      margin-top: 1rem;
+    .description {
+      margin-bottom: 1rem;
+    }
+    .login {
+      margin: 0 4rem;
+      padding: 1rem 2rem 0 2rem;
+      border-top: 1px solid #bbb;
     }
   }
 }
