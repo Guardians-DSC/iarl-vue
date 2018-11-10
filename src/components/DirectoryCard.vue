@@ -8,7 +8,7 @@
     @click="download()"
     class="download"
     v-if="overCard">
-    <login-modal v-if="!validToken"/>
+    <login-modal v-if="!user.validToken"/>
   </div>
 </template>
 
@@ -21,15 +21,14 @@ export default {
   name: 'DirectoryCard',
   data () {
     return {
-      overCard: false,
-      validToken: true
+      overCard: false
     }
   },
   props: {
     directoryName: String
   },
   computed: {
-    ...mapState(['path', 'token', 'activeWorkspace']),
+    ...mapState(['path', 'user', 'activeWorkspace']),
     processedDirectoryName () {
       return this.directoryName.substring(0, 10) + (this.directoryName.length > 10 ? '...' : '')
     }
@@ -38,14 +37,14 @@ export default {
     LoginModal
   },
   methods: {
-    ...mapMutations(['addDirectory']),
+    ...mapMutations(['addDirectory', 'updateUser']),
     download () {
       let downloadPath = this.path.slice()
       downloadPath.push(this.directoryName)
       axios.get(`${this.activeWorkspace.apiURL}/api/download`,
         {
           params: { path: downloadPath.join('/') },
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.user.token },
           responseType: 'blob'
         }).then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]))
@@ -56,7 +55,7 @@ export default {
         link.click()
       }).catch(err => {
         if (err.response.status === 400) {
-          this.validToken = false
+          this.updateUser({})
         }
       })
     }

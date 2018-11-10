@@ -8,6 +8,9 @@
       class="nav-item" :class="{ active: item.lab === activeWorkspace.lab }">
         {{ item.lab }}
       </li>
+      <li>
+        {{user.username}} | <span @click="logout" class="logout">logout</span>
+      </li>
     </ul>
   </div>
 </template>
@@ -36,12 +39,16 @@ export default {
       ]
     }
   },
-  computed: mapState(['activeWorkspace']),
+  computed: mapState(['activeWorkspace', 'user']),
   components: {
     SearchBar
   },
   methods: {
-    ...mapMutations(['updateWorkspace'])
+    ...mapMutations(['updateWorkspace', 'updateUser']),
+    logout () {
+      this.updateUser({})
+      this.$router.push('Login')
+    }
   }
 }
 </script>
@@ -72,6 +79,9 @@ export default {
       cursor: pointer;
       user-select: none;
     }
+  }
+  .logout:hover {
+    color: #555;
   }
   .active {
     font-weight: bolder;

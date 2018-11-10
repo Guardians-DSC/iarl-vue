@@ -1,26 +1,22 @@
 <template>
   <div class="login">
     <div class="login-box">
-      <login-form />
+      <login-form @successfulLogin="successfulLogin"/>
     </div>
   </div>
 </template>
 
 <script>
 import LoginForm from '@/components/LoginForm'
-import { mapState } from 'vuex'
 
 export default {
   name: 'Login',
   components: {
     LoginForm
   },
-  computed: mapState(['validToken']),
-  watch: {
-    validToken (value) {
-      if (value) {
-        this.$router.push('FileManager')
-      }
+  methods: {
+    successfulLogin () {
+      this.$router.push('FileManager')
     }
   }
 }

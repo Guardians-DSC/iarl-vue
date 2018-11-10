@@ -3,7 +3,7 @@
     <navbar class="nav"/>
     <tools-bar class="tools-bar"/>
     <workspace class="workspace"/>
-    <login-modal v-if="!validToken" />
+    <login-modal v-if="!user.validToken" />
   </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
     ToolsBar,
     LoginModal
   },
-  computed: mapState(['validToken'])
+  computed: mapState(['user'])
 }
 </script>
 

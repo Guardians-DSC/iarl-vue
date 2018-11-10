@@ -5,12 +5,15 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    user: {
+      username: '',
+      token: '',
+      validToken: false
+    },
     path: [],
-    token: '',
-    validToken: false,
     activeWorkspace: {
-      lab: 'LCC3',
-      apiURL: 'http://127.0.0.1:3002'
+      lab: 'LCC1',
+      apiURL: 'http://127.0.0.1:3000'
     },
     filters: {
       search: new RegExp(),
@@ -21,12 +24,9 @@ const store = new Vuex.Store({
     initialiseStore (state) {
       if (localStorage.getItem('iarlStorage')) {
         const iarlStorage = JSON.parse(localStorage.getItem('iarlStorage'))
-        state.token = iarlStorage.token
-        state.path = iarlStorage.path
-        state.validToken = iarlStorage.validToken
-        if (iarlStorage.activeWorkspace) {
-          state.activeWorkspace = iarlStorage.activeWorkspace
-        }
+        iarlStorage.user && (state.user = iarlStorage.user)
+        iarlStorage.path && (state.path = iarlStorage.path)
+        iarlStorage.activeWorkspace && (state.activeWorkspace = iarlStorage.activeWorkspace)
       }
     },
     backPath (state, index) {
@@ -41,9 +41,8 @@ const store = new Vuex.Store({
     changeHidden (state) {
       state.filters.hidden = !state.filters.hidden
     },
-    updateToken (state, token) {
-      state.token = token
-      state.validToken = true
+    updateUser (state, user) {
+      state.user = user
     },
     updateWorkspace (state, workspace) {
       state.activeWorkspace = workspace
@@ -54,10 +53,9 @@ const store = new Vuex.Store({
 
 store.subscribe((mutation, state) => {
   localStorage.setItem('iarlStorage', JSON.stringify({
-    token: state.token,
+    user: state.user,
     activeWorkspace: state.activeWorkspace,
-    path: state.path,
-    validToken: state.validToken
+    path: state.path
   }))
 })
 

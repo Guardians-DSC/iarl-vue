@@ -15,7 +15,7 @@
 import axios from 'axios'
 import DirectoryCard from '@/components/DirectoryCard'
 import FileCard from '@/components/FileCard'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Workspace',
@@ -25,23 +25,24 @@ export default {
     }
   },
   computed: {
-    ...mapState(['path', 'token', 'activeWorkspace', 'filters'])
+    ...mapState(['path', 'user', 'activeWorkspace', 'filters'])
   },
   components: {
     DirectoryCard,
     FileCard
   },
   methods: {
+    ...mapMutations(['updateUser']),
     updateItems () {
       axios.get(`${this.activeWorkspace.apiURL}/api/directories`,
         {
           params: { path: this.path.join('/') },
-          headers: { Authorization: this.token }
+          headers: { Authorization: this.user.token }
         }).then(res => {
         this.items = res.data.items
       }).catch(err => {
         if (err.response.status === 400) {
-          this.validToken = false
+          this.updateUser({})
         }
       })
     },

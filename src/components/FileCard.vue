@@ -3,21 +3,20 @@
     <img v-if="overCard" src="@/assets/download.png" alt="" @click="download()" class="download">
     <img :src="iconPath" alt="">
     <p :title="fileName">{{ processedFileName }}</p>
-    <login-modal v-if="!validToken"/>
+    <login-modal v-if="!this.user.validToken"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import LoginModal from '@/components/LoginModal'
 
 export default {
   name: 'FileCard',
   data () {
     return {
-      overCard: false,
-      validToken: true
+      overCard: false
     }
   },
   props: {
@@ -25,7 +24,7 @@ export default {
     extension: String
   },
   computed: {
-    ...mapState(['path', 'token', 'activeWorkspace']),
+    ...mapState(['path', 'user', 'activeWorkspace']),
     processedFileName () {
       return this.fileName.substring(0, 10) + (this.fileName.length > 10 ? '...' : '')
     },
@@ -41,13 +40,14 @@ export default {
     LoginModal
   },
   methods: {
+    ...mapMutations(['updateUser']),
     download () {
       let downloadPath = this.path.slice()
       downloadPath.push(this.fileName)
       axios.get(`${this.activeWorkspace.apiURL}/api/download`,
         {
           params: { path: downloadPath.join('/') },
-          headers: { Authorization: this.token },
+          headers: { Authorization: this.user.token },
           responseType: 'blob'
         }).then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]))
@@ -58,7 +58,7 @@ export default {
         link.click()
       }).catch(err => {
         if (err.response.status === 400) {
-          this.validToken = false
+          this.updateUser({})
         }
       })
     }
