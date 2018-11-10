@@ -90,10 +90,10 @@ export default {
     top: .5rem;
     cursor: pointer;
     &:hover {
-      transform: translate(0, 2px);
+      transform: translate(0, 3px);
     }
     &:active {
-      transform: scale(1.1);
+      transform: scale(1.15);
     }
   }
 }
