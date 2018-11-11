@@ -39,7 +39,7 @@ export default {
           this.$emit('successfulLogin')
         })
         .catch(err => {
-          this.error = err
+          this.error = err.response.data.error
         })
     }
   },

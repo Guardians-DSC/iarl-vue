@@ -30,7 +30,6 @@ export default {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: #000;
   background-color: rgba(0,0,0,0.4);
   color: #666;
   text-align: center;

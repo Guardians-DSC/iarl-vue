@@ -41,7 +41,7 @@ export default {
         }).then(res => {
         this.items = res.data.items
       }).catch(err => {
-        if (err.response.status === 400) {
+        if (err.response.status === 401) {
           this.updateUser({})
         }
       })
