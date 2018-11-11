@@ -54,7 +54,7 @@ export default {
         document.body.appendChild(link)
         link.click()
       }).catch(err => {
-        if (err.response.status === 400) {
+        if (err.response.status === 401) {
           this.updateUser({})
         }
       })

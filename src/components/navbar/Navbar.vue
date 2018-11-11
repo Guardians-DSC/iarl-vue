@@ -17,26 +17,14 @@
 
 <script>
 import SearchBar from '@/components/navbar/SearchBar'
+import config from '@/config'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Navbar',
   data () {
     return {
-      navItems: [
-        {
-          lab: 'LCC1',
-          apiURL: 'http://127.0.0.1:3000'
-        },
-        {
-          lab: 'LCC2',
-          apiURL: 'http://127.0.0.1:3001'
-        },
-        {
-          lab: 'LCC3',
-          apiURL: 'http://127.0.0.1:3002'
-        }
-      ]
+      navItems: config.servers
     }
   },
   computed: mapState(['activeWorkspace', 'user']),

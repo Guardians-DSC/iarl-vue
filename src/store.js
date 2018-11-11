@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import config from '@/config'
 
 Vue.use(Vuex)
 
@@ -11,10 +12,7 @@ const store = new Vuex.Store({
       validToken: false
     },
     path: [],
-    activeWorkspace: {
-      lab: 'LCC1',
-      apiURL: 'http://127.0.0.1:3000'
-    },
+    activeWorkspace: config.servers[0],
     filters: {
       search: new RegExp(),
       hidden: false
