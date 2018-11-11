@@ -1,49 +1,46 @@
 <template>
-  <div class="file-card" @mouseover="overCard = true" @mouseleave="overCard = false">
-    <img v-if="overCard" src="@/assets/download.png" alt="" @click="download()" class="download">
-    <img :src="iconPath" alt="">
-    <p :title="fileName">{{ processedFileName }}</p>
-    <login-modal v-if="!this.user.validToken"/>
+  <div class="directory-card"
+    @mouseover="overCard = true" @mouseleave="overCard = false"
+    @dblclick="addDirectory(directoryName)">
+    <img src="@/assets/directory.png" alt="">
+    <p :title="directoryName">{{ processedDirectoryName }}</p>
+    <img src="@/assets/download.png" alt=""
+    @click="download()"
+    class="download"
+    v-if="overCard">
+    <login-modal v-if="!user.validToken"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapState, mapMutations } from 'vuex'
-import LoginModal from '@/components/LoginModal'
+import LoginModal from '@/components/login/LoginModal'
 
 export default {
-  name: 'FileCard',
+  name: 'DirectoryCard',
   data () {
     return {
       overCard: false
     }
   },
   props: {
-    fileName: String,
-    extension: String
+    directoryName: String
   },
   computed: {
     ...mapState(['path', 'user', 'activeWorkspace']),
-    processedFileName () {
-      return this.fileName.substring(0, 10) + (this.fileName.length > 10 ? '...' : '')
-    },
-    iconPath () {
-      try {
-        return require('@/assets/icons/' + this.extension.substring(1) + '.png')
-      } catch (err) {
-        return require('@/assets/icons/_blank.png')
-      }
+    processedDirectoryName () {
+      return this.directoryName.substring(0, 10) + (this.directoryName.length > 10 ? '...' : '')
     }
   },
   components: {
     LoginModal
   },
   methods: {
-    ...mapMutations(['updateUser']),
+    ...mapMutations(['addDirectory', 'updateUser']),
     download () {
       let downloadPath = this.path.slice()
-      downloadPath.push(this.fileName)
+      downloadPath.push(this.directoryName)
       axios.get(`${this.activeWorkspace.apiURL}/api/download`,
         {
           params: { path: downloadPath.join('/') },
@@ -53,7 +50,7 @@ export default {
         const url = window.URL.createObjectURL(new Blob([response.data]))
         const link = document.createElement('a')
         link.href = url
-        link.setAttribute('download', this.fileName)
+        link.setAttribute('download', `${this.directoryName}.zip`)
         document.body.appendChild(link)
         link.click()
       }).catch(err => {
@@ -67,27 +64,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.file-card {
+.directory-card {
   background: #fff;
   border: 1px solid #ddd;
   font-family: sans-serif;
   font-weight: bold;
   font-size: 14px;
+  padding: 1rem;
   text-align: center;
   color: #666;
+  width: 12rem;
+  margin: .3rem;
+  display: flex;
+  align-items: center;
   border-radius: 5px;
-  margin: .1rem;
-  width: 9rem;
-  padding: 1rem 0;
   position: relative;
+  cursor: pointer;
   user-select: none;
-  p {
-    margin-top: 1rem;
+  img {
+    margin-right: .5rem;
   }
   .download {
     position: absolute;
-    right: .5rem;
-    top: .5rem;
+    right: 0;
     cursor: pointer;
     &:hover {
       transform: translate(0, 3px);

@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import Workspace from '@/components/Workspace'
-import Navbar from '@/components/Navbar'
-import ToolsBar from '@/components/ToolsBar'
-import LoginModal from '@/components/LoginModal'
+import Workspace from '@/components/workspace/Workspace'
+import Navbar from '@/components/navbar/Navbar'
+import ToolsBar from '@/components/toolsbar/ToolsBar'
+import LoginModal from '@/components/login/LoginModal'
 import { mapState } from 'vuex'
 
 export default {

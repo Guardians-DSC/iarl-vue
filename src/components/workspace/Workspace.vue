@@ -13,8 +13,8 @@
 
 <script>
 import axios from 'axios'
-import DirectoryCard from '@/components/DirectoryCard'
-import FileCard from '@/components/FileCard'
+import DirectoryCard from '@/components/workspace/DirectoryCard'
+import FileCard from '@/components/workspace/FileCard'
 import { mapState, mapMutations } from 'vuex'
 
 export default {

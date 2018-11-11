@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import SearchBar from '@/components/SearchBar'
+import SearchBar from '@/components/navbar/SearchBar'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
