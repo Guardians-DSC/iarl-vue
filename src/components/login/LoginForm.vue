@@ -9,7 +9,7 @@
 
 <script>
 import axios from 'axios'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -22,6 +22,7 @@ export default {
     }
   },
   computed: {
+    ...mapActions(['activeWorkspace']),
     submitDisabled () {
       return !this.login.username || !this.login.password
     }
@@ -29,7 +30,7 @@ export default {
   methods: {
     ...mapMutations(['updateUser']),
     submit () {
-      axios.post('http://127.0.0.1:3000/api/login', this.login)
+      axios.post(this.activeWorkspace.apiURL, this.login)
         .then(res => {
           this.updateUser({
             token: res.data.token,
