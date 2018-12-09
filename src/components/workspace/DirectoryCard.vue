@@ -8,14 +8,12 @@
     @click="download()"
     class="download"
     v-if="overCard">
-    <login-modal v-if="!user.validToken"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapState, mapMutations } from 'vuex'
-import LoginModal from '@/components/login/LoginModal'
 
 export default {
   name: 'DirectoryCard',
@@ -32,9 +30,6 @@ export default {
     processedDirectoryName () {
       return this.directoryName.substring(0, 10) + (this.directoryName.length > 10 ? '...' : '')
     }
-  },
-  components: {
-    LoginModal
   },
   methods: {
     ...mapMutations(['addDirectory', 'updateUser']),

@@ -3,7 +3,6 @@
     <navbar class="nav"/>
     <tools-bar class="tools-bar"/>
     <workspace class="workspace"/>
-    <login-modal v-if="!user.validToken" />
   </div>
 </template>
 
@@ -11,7 +10,6 @@
 import Workspace from '@/components/workspace/Workspace'
 import Navbar from '@/components/navbar/Navbar'
 import ToolsBar from '@/components/toolsbar/ToolsBar'
-import LoginModal from '@/components/login/LoginModal'
 import { mapState } from 'vuex'
 
 export default {
@@ -19,8 +17,7 @@ export default {
   components: {
     Workspace,
     Navbar,
-    ToolsBar,
-    LoginModal
+    ToolsBar
   },
   computed: mapState(['user'])
 }

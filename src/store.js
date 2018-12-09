@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import config from '@/config'
 import axios from 'axios'
+import _ from 'lodash'
 
 Vue.use(Vuex)
 
@@ -11,8 +12,7 @@ const store = new Vuex.Store({
   state: {
     user: {
       username: '',
-      token: '',
-      validToken: false
+      token: ''
     },
     path: [],
     activeWorkspace: config.servers[0],
@@ -25,9 +25,9 @@ const store = new Vuex.Store({
     initialiseStore (state) {
       if (localStorage.getItem('iarlStorage')) {
         const iarlStorage = JSON.parse(localStorage.getItem('iarlStorage'))
-        iarlStorage.user && (state.user = iarlStorage.user)
-        iarlStorage.path && (state.path = iarlStorage.path)
-        iarlStorage.activeWorkspace && (state.activeWorkspace = iarlStorage.activeWorkspace)
+        !_.isEmpty(iarlStorage.user) && (state.user = iarlStorage.user)
+        !_.isEmpty(iarlStorage.path) && (state.path = iarlStorage.path)
+        !_.isEmpty(iarlStorage.activeWorkspace) && (state.activeWorkspace = iarlStorage.activeWorkspace)
       }
     },
     backPath (state, index) {
@@ -57,7 +57,6 @@ const store = new Vuex.Store({
           .then(res => {
             commit('updateUser', {
               token: res.data.token,
-              validToken: true,
               username: user.username
             })
             resolve()

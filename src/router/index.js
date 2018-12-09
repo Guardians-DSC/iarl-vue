@@ -10,7 +10,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: () => store.state.user.validToken ? '/FileManager' : '/Login'
+      redirect: () => store.state.user.token ? '/FileManager' : '/Login'
     },
     {
       path: '/Login',

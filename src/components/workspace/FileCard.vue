@@ -3,14 +3,12 @@
     <img v-if="overCard" src="@/assets/download.png" alt="" @click="download()" class="download">
     <img :src="iconPath" alt="">
     <p :title="fileName">{{ processedFileName }}</p>
-    <login-modal v-if="!this.user.validToken"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapState, mapMutations } from 'vuex'
-import LoginModal from '@/components/login/LoginModal'
 
 export default {
   name: 'FileCard',
@@ -35,9 +33,6 @@ export default {
         return require('@/assets/icons/_blank.png')
       }
     }
-  },
-  components: {
-    LoginModal
   },
   methods: {
     ...mapMutations(['updateUser']),
