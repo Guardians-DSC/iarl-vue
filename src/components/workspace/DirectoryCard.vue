@@ -7,19 +7,23 @@
     <img src="@/assets/download.png" alt=""
     @click="download()"
     class="download"
-    v-if="overCard">
+    v-if="overCard && !downloading">
+    <loader class="loader" v-else-if="downloading"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapState, mapMutations } from 'vuex'
+import downloadjs from 'downloadjs'
+import Loader from '@/components/Loader'
 
 export default {
   name: 'DirectoryCard',
   data () {
     return {
-      overCard: false
+      overCard: false,
+      downloading: false
     }
   },
   props: {
@@ -36,24 +40,26 @@ export default {
     download () {
       let downloadPath = this.path.slice()
       downloadPath.push(this.directoryName)
+      this.downloading = true
       axios.get(`${this.activeWorkspace.apiURL}/api/download`,
         {
           params: { path: downloadPath.join('/') },
           headers: { Authorization: this.user.token },
           responseType: 'blob'
-        }).then(response => {
-        const url = window.URL.createObjectURL(new Blob([response.data]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', `${this.directoryName}.zip`)
-        document.body.appendChild(link)
-        link.click()
-      }).catch(err => {
-        if (err.response.status === 401) {
-          this.updateUser({})
-        }
-      })
+        })
+        .then(response => {
+          this.downloading = false
+          downloadjs(response.data, `${this.directoryName}.zip`)
+        })
+        .catch(err => {
+          if (err.response.status === 401) {
+            this.updateUser({})
+          }
+        })
     }
+  },
+  components: {
+    Loader
   }
 }
 </script>
@@ -89,6 +95,10 @@ export default {
     &:active {
       transform: scale(1.15);
     }
+  }
+  .loader {
+    position: absolute;
+    right: 0;
   }
 }
 </style>

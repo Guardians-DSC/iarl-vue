@@ -6,7 +6,7 @@ import _ from 'lodash'
 
 Vue.use(Vuex)
 
-const URL_LOGIN = config.servers[0].apiURL
+const URL_LOGIN = `${config.servers[0].apiURL}/api/login`
 
 const store = new Vuex.Store({
   state: {
@@ -53,7 +53,7 @@ const store = new Vuex.Store({
   actions: {
     login ({ commit }, user) {
       return new Promise((resolve, reject) => {
-        axios.post(`${URL_LOGIN}/api/login`, user)
+        axios.post(`${URL_LOGIN}`, user)
           .then(res => {
             commit('updateUser', {
               token: res.data.token,

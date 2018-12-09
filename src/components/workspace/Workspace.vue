@@ -34,17 +34,19 @@ export default {
   methods: {
     ...mapMutations(['updateUser']),
     updateItems () {
-      axios.get(`${this.activeWorkspace.apiURL}/api/directories`,
-        {
-          params: { path: this.path.join('/') },
-          headers: { Authorization: this.user.token }
-        }).then(res => {
-        this.items = res.data.items
-      }).catch(err => {
-        if (err.response.status === 401) {
-          this.updateUser({})
-        }
-      })
+      const config = {
+        params: { path: this.path.join('/') },
+        headers: { Authorization: this.user.token }
+      }
+      axios.get(`${this.activeWorkspace.apiURL}/api/directories`, config)
+        .then(res => {
+          this.items = res.data.items
+        })
+        .catch(err => {
+          if (err.response.status === 401) {
+            this.updateUser({})
+          }
+        })
     },
     getItems ({ isFile }) {
       return this.items.filter(x => {
