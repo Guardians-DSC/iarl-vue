@@ -1,6 +1,7 @@
 <template>
   <div class="file-card" @mouseover="overCard = true" @mouseleave="overCard = false">
-    <img v-if="overCard" src="@/assets/download.png" alt="" @click="download()" class="download">
+    <img v-if="overCard && !downloading" src="@/assets/download.png" alt="" @click="download()" class="download">
+    <loader v-else-if="downloading"/>
     <img :src="iconPath" alt="">
     <p :title="fileName">{{ processedFileName }}</p>
   </div>
@@ -9,12 +10,15 @@
 <script>
 import axios from 'axios'
 import { mapState, mapMutations } from 'vuex'
+import downloadjs from 'downloadjs'
+import Loader from '@/components/Loader'
 
 export default {
   name: 'FileCard',
   data () {
     return {
-      overCard: false
+      overCard: false,
+      downloading: false
     }
   },
   props: {
@@ -39,24 +43,22 @@ export default {
     download () {
       let downloadPath = this.path.slice()
       downloadPath.push(this.fileName)
-      axios.get(`${this.activeWorkspace.apiURL}/api/download`,
-        {
-          params: { path: downloadPath.join('/') },
-          headers: { Authorization: this.user.token },
-          responseType: 'blob'
-        }).then(response => {
-        const url = window.URL.createObjectURL(new Blob([response.data]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', this.fileName)
-        document.body.appendChild(link)
-        link.click()
-      }).catch(err => {
-        if (err.response.status === 401) {
-          this.updateUser({})
-        }
-      })
+      const config = {
+        params: { path: downloadPath.join('/') },
+        headers: { Authorization: this.user.token },
+        responseType: 'blob'
+      }
+      axios.get(`${this.activeWorkspace.apiURL}/api/download`, config)
+        .then(response => {
+          downloadjs(response.data, this.fileName)
+        })
+        .catch(err => {
+          if (err.response.status === 401) this.updateUser({})
+        })
     }
+  },
+  components: {
+    Loader
   }
 }
 </script>
