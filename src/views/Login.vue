@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="login-box">
-      <login-form @successfulLogin="successfulLogin"/>
+      <login-form @successfulLogin="successfulLogin()"/>
     </div>
   </div>
 </template>

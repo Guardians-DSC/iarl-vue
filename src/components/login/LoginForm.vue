@@ -1,47 +1,36 @@
 <template>
   <form class="login-form" @submit.prevent="submit()">
-    <input ref="username" type="text" class="username" placeholder="username" v-model="login.username">
-    <input type="password" class="password" placeholder="password" v-model="login.password">
+    <input ref="username" type="text" class="username" placeholder="username" v-model="user.username">
+    <input type="password" class="password" placeholder="password" v-model="user.password">
     <div class="error" v-if="error">* {{error}}</div>
-    <button type="submit" :class="{ disabled: submitDisabled }" :disabled="submitDisabled" >Login</button>
+    <button type="submit" :class="{ disabled: submitDisabled }" :disabled="submitDisabled">Login</button>
   </form>
 </template>
 
 <script>
-import axios from 'axios'
-import { mapMutations, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   data () {
     return {
       error: '',
-      login: {
+      user: {
         username: '',
         password: ''
       }
     }
   },
   computed: {
-    ...mapActions(['activeWorkspace']),
     submitDisabled () {
-      return !this.login.username || !this.login.password
+      return !this.user.username || !this.user.password
     }
   },
   methods: {
-    ...mapMutations(['updateUser']),
+    ...mapActions(['login']),
     submit () {
-      axios.post(this.activeWorkspace.apiURL, this.login)
-        .then(res => {
-          this.updateUser({
-            token: res.data.token,
-            validToken: true,
-            username: this.login.username
-          })
-          this.$emit('successfulLogin')
-        })
-        .catch(err => {
-          this.error = err.response.data.error
-        })
+      this.login(this.user)
+        .then(() => this.$emit('successfulLogin'))
+        .catch(err => { this.error = err })
     }
   },
   mounted () {

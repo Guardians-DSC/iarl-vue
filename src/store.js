@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import config from '@/config'
+import axios from 'axios'
 
 Vue.use(Vuex)
+
+const URL_LOGIN = config.servers[0].apiURL
 
 const store = new Vuex.Store({
   state: {
@@ -45,6 +48,24 @@ const store = new Vuex.Store({
     updateWorkspace (state, workspace) {
       state.activeWorkspace = workspace
       state.path = []
+    }
+  },
+  actions: {
+    login ({ commit }, user) {
+      return new Promise((resolve, reject) => {
+        axios.post(`${URL_LOGIN}/api/login`, user)
+          .then(res => {
+            commit('updateUser', {
+              token: res.data.token,
+              validToken: true,
+              username: user.username
+            })
+            resolve()
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
     }
   }
 })
