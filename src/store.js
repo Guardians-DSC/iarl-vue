@@ -1,12 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import config from '@/config'
-import axios from 'axios'
 import _ from 'lodash'
+import config from '@/config'
+import api from '@/api'
 
 Vue.use(Vuex)
-
-const URL_LOGIN = `${config.servers[0].apiURL}/api/login`
 
 const store = new Vuex.Store({
   state: {
@@ -46,14 +44,15 @@ const store = new Vuex.Store({
       state.user = user
     },
     updateWorkspace (state, workspace) {
-      state.activeWorkspace = workspace
+      state.activeWorkspace = { ...workspace }
+      api.defaults.headers.lcc = workspace.id
       state.path = []
     }
   },
   actions: {
     login ({ commit }, user) {
       return new Promise((resolve, reject) => {
-        axios.post(`${URL_LOGIN}`, user)
+        api.post('/api/login', user)
           .then(res => {
             commit('updateUser', {
               token: res.data.token,

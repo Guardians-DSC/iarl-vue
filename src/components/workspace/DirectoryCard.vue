@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import api from '@/api'
 import { mapState, mapMutations } from 'vuex'
 import downloadjs from 'downloadjs'
 import Loader from '@/components/Loader'
@@ -41,7 +41,7 @@ export default {
       let downloadPath = this.path.slice()
       downloadPath.push(this.directoryName)
       this.downloading = true
-      axios.get(`${this.activeWorkspace.apiURL}/api/download`,
+      api.get('/api/download',
         {
           params: { path: downloadPath.join('/') },
           headers: { Authorization: this.user.token },

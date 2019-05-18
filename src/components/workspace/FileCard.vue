@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import api from '@/api'
 import { mapState, mapMutations } from 'vuex'
 import downloadjs from 'downloadjs'
 import Loader from '@/components/Loader'
@@ -48,7 +48,7 @@ export default {
         headers: { Authorization: this.user.token },
         responseType: 'blob'
       }
-      axios.get(`${this.activeWorkspace.apiURL}/api/download`, config)
+      api.get('/api/download', config)
         .then(response => {
           downloadjs(response.data, this.fileName)
         })
