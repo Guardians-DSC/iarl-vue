@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import api from '@/api'
 import DirectoryCard from '@/components/workspace/DirectoryCard'
 import FileCard from '@/components/workspace/FileCard'
 import { mapState, mapMutations } from 'vuex'
@@ -38,7 +38,7 @@ export default {
         params: { path: this.path.join('/') },
         headers: { Authorization: this.user.token }
       }
-      axios.get(`${this.activeWorkspace.apiURL}/api/directories`, config)
+      api.get('/api/directories', config)
         .then(res => {
           this.items = res.data.items
         })

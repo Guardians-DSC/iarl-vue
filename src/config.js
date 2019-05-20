@@ -2,15 +2,15 @@ export default {
   servers: [
     {
       lab: 'LCC1',
-      apiURL: 'http://127.0.0.1:3000'
+      id: '1'
     },
     {
       lab: 'LCC2',
-      apiURL: 'http://127.0.0.1:3001'
+      id: '2'
     },
     {
       lab: 'LCC3',
-      apiURL: 'http://127.0.0.1:3002'
+      id: '3'
     }
   ]
 }
