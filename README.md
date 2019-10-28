@@ -1,8 +1,29 @@
-# iarl-vue
+# IARL
+#### Esqueceu de colocar o código no drive e deixou salvo apenas nos LCC's? Não se desespere você pode baixar através do IARL! 
 
-> A Vue.js project
+Interface de Acesso Remoto ao Laboratório (IARL) é uma aplicação desenvolvida para que os alunos do curso de Ciência da Computação da UFCG tenham acesso aos arquivos salvos em sua conta nos laboratórios de forma rápida e fácil . Trata-se de uma aplicação web onde é possível fazer login e download dos arquivos salvos nas máquinas dos LCC's. 
 
-## Build Setup
+# Quer contribuir?
+#### Toda ajuda é bem vinda!
+
+Estamos abertos a receber pull requests para melhorar a aplicação. É uma ótima oportunidade para aprender e colocar em prática conhecimentos de desenvolvimento web. 
+
+# Como rodar localmente?
+#### Mãos na massa
+
+O IARL usa o framework vue.js. Você vai precisar ter algumas coisas instaladas. São elas:
+- node.js
+- npm
+- vue.js (use o npm para essa instalação) 
+
+#### Faça o download do repositório e utilize os seguintes comandos: 
+```
+npm install
+npm run dev 
+```
+Acesse o endereço: http://localhost:8080/
+
+#### Abaixo temos os comandos para rodar em modo de produção e testes
 
 ``` bash
 # install dependencies
@@ -23,5 +44,3 @@ npm run unit
 # run all tests
 npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
